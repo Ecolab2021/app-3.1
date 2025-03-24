@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Cantiere e Offerte</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        /* Questa sezione di stile inline contiene solo il minimo necessario per il caricamento
+           Il resto degli stili verrà caricato dal file styles.css */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Sistema di notifica -->
+<div id="notificationSystem"></div>
+    <!-- Indicatore di caricamento (verrà nascosto dopo il caricamento completo) -->
+    <div class="loading" id="loadingIndicator">
+        <div>Caricamento applicazione...</div>
+    </div>
+
+    <!-- Barra di navigazione principale -->
+    <div class="navbar-container">
+        <nav>
+            <div class="logo-container">
+                <!-- Modificato il logo da "logo.png" a "logo BN.png" -->
+                <img src="logo BN.png" alt="Logo Aziendale" class="logo">
+            </div>
+<button id="tabCategorie" class="nav-button active">Categorie</button>
+            <button id="tabMateriali" class="nav-button">Materiali</button>
+            <button id="tabOfferta" class="nav-button">Offerta</button>
+            <button id="tabOperai" class="nav-button">Gestione Operai</button>
+            <button id="aggiungiCategoria" class="nav-button">Aggiungi categorie CSV</button>
+            <button id="aggiungiCategoriaXPWE" class="nav-button">Aggiungi categorie XPWE</button>
+            <button id="salvaProgetto" class="nav-button square-button" title="Salva Progetto">
+    <img src="salva.png" width="20" height="20" alt="Salva">
+</button>
+<button id="caricaProgetto" class="nav-button square-button" title="Carica Progetto">
+    <img src="carica.png" width="20" height="20" alt="Carica">
+</button>
+<button id="stampaButton" class="nav-button square-button" title="Stampa">
+    <img src="stampa.png" width="20" height="20" alt="Stampa">
+</button>
+            <button id="espandiTuttoBtn" class="nav-button">
+                <img src="plus.png" width="16" height="16" alt="Espandi"> Espandi Tutto
+            </button>
+            <button id="comprimiTuttoBtn" class="nav-button">
+                <img src="minus.png" width="16" height="16" alt="Comprimi"> Comprimi Tutto
+            </button>
+            <input type="file" id="progettoFile" accept=".json" style="display: none;">
+            <input type="file" id="categoriaFile" accept=".csv" style="display: none;" multiple>
+	    <input type="file" id="categoriaFileXPWE" accept=".xpwe" style="display: none;" multiple>
+
+        </nav>
+    </div>
+
+    <!-- Modal per il titolo di stampa -->
+    <div id="titoloModal" class="modal">
+        <div class="modal-content">
+            <h3>Inserisci i dati per la stampa</h3>
+            <input type="text" id="titoloInput" placeholder="Inserisci il titolo">
+            <input type="text" id="clienteInput" placeholder="Nome del cliente">
+            <div class="modal-buttons">
+                <button id="annullaTitolo">Annulla</button>
+                <button id="stampaOrganizzazioneBtn">Organizzazione Cantiere</button>
+                <button id="stampaRichiestaMaterialiBtn">Richiesta Materiali</button>
+                <button id="stampaRichiestaOffertaBtn">Richiesta Offerta</button>
+                <button id="stampaCostoMaterialiBtn">Costo Materiali</button>
+                <button id="stampaOffertaBtn">Offerta</button>
+                <button id="stampaGestioneOperaiBtn">Piano di Lavoro Operai</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal per la modifica lavorazione -->
+    <div id="modificaLavorazioneModal" class="modal">
+        <div class="modal-content edit-modal">
+            <h3>Modifica Lavorazione</h3>
+            <form id="modificaLavorazioneForm">
+                <div class="form-row">
+                    <label for="editNumero">Numero:</label>
+                    <input type="text" id="editNumero">
+                </div>
+                <div class="form-row">
+                    <label for="editTariffa">Tariffa:</label>
+                    <input type="text" id="editTariffa">
+                </div>
+                <div class="form-row">
+                    <label for="editNome">Descrizione:</label>
+                    <textarea id="editNome" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="editQuantita">Quantità:</label>
+                    <input type="text" id="editQuantita">
+                </div>
+                <div class="form-row">
+                    <label for="editImportoManodopera">Importo Manodopera:</label>
+                    <input type="text" id="editImportoManodopera">
+                </div>
+                <div class="form-row">
+                    <label for="editPrezzoUnitario">Prezzo Unitario:</label>
+                    <input type="text" id="editPrezzoUnitario">
+                </div>
+                <div class="form-row">
+                    <label for="editPercentualeMO">Percentuale Manodopera:</label>
+                    <input type="text" id="editPercentualeMO">
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" id="annullaModificaBtn">Annulla</button>
+                    <button type="button" id="salvaModificaBtn">Salva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal per la modifica materiale -->
+    <div id="modificaMaterialeModal" class="modal">
+        <div class="modal-content edit-modal">
+            <h3>Modifica Materiale</h3>
+            <form id="modificaMaterialeForm">
+                <div class="form-row">
+                    <label for="editMaterialeDescrizione">Descrizione:</label>
+                    <textarea id="editMaterialeDescrizione" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="editMaterialeQuantita">Quantità:</label>
+                    <input type="text" id="editMaterialeQuantita">
+                </div>
+                <div class="form-row">
+                    <label for="editMaterialeUM">Unità di Misura:</label>
+                    <input type="text" id="editMaterialeUM">
+                </div>
+                <div class="form-row">
+                    <label for="editMaterialePrezzo">Prezzo Unitario:</label>
+                    <input type="text" id="editMaterialePrezzo">
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" id="annullaModificaMaterialeBtn">Annulla</button>
+                    <button type="button" id="salvaModificaMaterialeBtn">Salva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal per la gestione dell'organico -->
+    <div id="organicoModal" class="modal">
+        <div class="modal-content">
+            <h3>Gestione Organico</h3>
+            <div class="organico-container">
+                <div class="operai-list-container">
+                    <table class="operai-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">Nome</th>
+                                <th style="width: 50%;">Cognome</th>
+                                <th style="width: 20%;">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaOperai">
+                            <!-- Lista operai generata dinamicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-buttons">
+    <button id="aggiungiNuovoOperaioBtn" class="add-operaio-btn">Aggiungi Nuovo Operaio</button>
+    <button id="salvaOperaiBtn">Salva Elenco Operai</button>
+    <button id="caricaOperaiBtn">Carica Elenco Operai</button>
+    <input type="file" id="operaiFile" accept=".txt" style="display: none;">
+    <button id="chiudiOrganicoBtn">Chiudi</button>
+</div>
+        </div>
+    </div>
+
+    <!-- Modal per la modifica di un operaio -->
+    <div id="editOperaioModal" class="modal">
+        <div class="modal-content">
+            <h3>Modifica Operaio</h3>
+            <div class="form-row">
+                <label for="editOperaioNome">Nome:</label>
+                <input type="text" id="editOperaioNome">
+            </div>
+            <div class="form-row">
+                <label for="editOperaioCognome">Cognome:</label>
+                <input type="text" id="editOperaioCognome">
+            </div>
+            <div class="modal-buttons">
+                <button id="annullaEditOperaioBtn">Annulla</button>
+                <button id="salvaEditOperaioBtn">Salva</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal per l'assegnazione degli operai ad una categoria -->
+    <div id="assegnaOperaiModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Assegna Operai alla Categoria</h3>
+            <div class="operai-assegnazione-container">
+                <div id="listaOperaiAssegnazione" class="lista-operai-assegnazione">
+                    <!-- Lista operai generata dinamicamente -->
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button id="annullaAssegnaOperaiBtn">Annulla</button>
+                <button id="salvaAssegnaOperaiBtn">Salva</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal per la selezione delle categorie da stampare -->
+    <div id="modalSelezioneCategorie" class="modal">
+        <div class="modal-content">
+            <h3>Seleziona le categorie da stampare</h3>
+            <div id="categoriePerStampaContainer" class="categorie-stampa-container">
+                <!-- Le categorie verranno generate dinamicamente -->
+            </div>
+            <div class="modal-buttons">
+                <button id="annullaStampaSelectBtn">Annulla</button>
+                <button id="confermaStampaSelectBtn">Conferma e Stampa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal per la selezione dei materiali da stampare -->
+    <div id="modalSelezioneMateriali" class="modal">
+        <div class="modal-content">
+            <h3>Seleziona i materiali da stampare</h3>
+            <div id="materialiPerStampaContainer" class="materiali-stampa-container">
+                <!-- I materiali verranno generati dinamicamente -->
+            </div>
+            <div class="modal-buttons">
+                <button id="annullaStampaMaterialiBtn">Annulla</button>
+                <button id="confermaStampaMaterialiBtn">Conferma e Stampa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal per la selezione delle squadre da stampare -->
+    <div id="modalSelezioneSquadre" class="modal">
+        <div class="modal-content">
+            <h3>Seleziona le squadre da stampare</h3>
+            <div id="squadrePerStampaContainer" class="squadre-stampa-container">
+                <!-- Le squadre verranno generate dinamicamente -->
+            </div>
+            <div class="modal-buttons">
+                <button id="annullaStampaSquadreBtn">Annulla</button>
+                <button id="confermaStampaSquadreBtn">Conferma e Stampa</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contenitore principale dell'applicazione -->
+    <div id="content">
+        <!-- Pagina Categorie -->
+        <div id="pageCategorie" class="page active">
+            <div id="categorieContainer">
+                <!-- Le tabelle delle categorie verranno inserite qui dinamicamente -->
+            </div>
+            <div class="input-group">
+                <input type="text" id="valoreManodopera" placeholder="Importo giornaliero manodopera (€)">
+                <button id="salvaValore">Salva</button>
+                <button id="cancellaValore">Cancella</button>
+            </div>
+        </div>
+        
+        <!-- Pagina Materiali -->
+        <div id="pageMateriali" class="page">
+            <div id="materialiContainer">
+                <!-- Le tabelle dei materiali verranno inserite qui dinamicamente -->
+            </div>
+        </div>
+        
+        <!-- Pagina Offerta -->
+        <div id="pageOfferta" class="page">
+            <div id="offertaContainer">
+                <!-- La tabella dell'offerta verrà inserita qui dinamicamente -->
+            </div>
+        </div>
+
+        <!-- Pagina Gestione Operai -->
+        <div id="pageOperai" class="page">
+            <div id="operaiContainer">
+                <!-- Le tabelle delle squadre verranno inserite qui dinamicamente -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Container dedicato alla stampa (visibile solo durante la stampa) -->
+<div id="printContainer" class="print-only">
+    <div class="print-mascherina">
+        <div class="mascherina-background"></div>
+        <div class="print-document-type"></div>
+        <div class="print-title"></div>
+        <div class="print-client-container">
+            <div class="print-client"></div>
+            <div class="print-firma-linea"></div>
+        </div>
+        <div class="print-impresa-container">
+            <div class="print-impresa">L'impresa</div>
+            <div class="print-firma-linea"></div>
+        </div>
+        <div class="print-date-container">
+            <div class="print-date"></div>
+        </div>
+    </div>
+    
+    <!-- Contenitore per il contenuto specifico della stampa -->
+    <div id="printContentContainer"></div>
+</div>
+        
+        <!-- Contenitore per il contenuto specifico della stampa -->
+        <div id="printContentContainer"></div>
+    </div>
+
+    <!-- Script per nascondere l'indicatore di caricamento -->
+    <script>
+        window.addEventListener('load', function() {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        });
+    </script>
+    
+    <!-- Script principale dell'applicazione -->
+    <script src="app.js"></script>
+</body>
+</html>

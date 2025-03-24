@@ -1,0 +1,2094 @@
+/* =============================================================
+   SEZIONE 1: RESET E STILI BASE
+   ============================================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background-color: #1164bd;
+    color: #ffffffe6;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #ffffffe6;
+    color: #1164bd;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+/* Pulsanti quadrati per funzioni specifiche */
+.square-button {
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Mantieni la stessa visualizzazione background e bordo degli altri pulsanti navbar */
+.square-button {
+    background-color: #1164bd;
+    border-radius: 4px;
+}
+
+/* Assicurati che al passaggio del mouse mantengano lo stesso comportamento degli altri pulsanti */
+.square-button:hover {
+    background-color: #ffffffe6;
+    color: #1164bd;
+}
+
+.square-button img {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.square-button:hover img {
+    transform: scale(1.2);
+}
+
+/* Stili per i pulsanti Espandi/Comprimi tutto */
+#espandiTuttoBtn, #comprimiTuttoBtn {
+    display: none;
+    align-items: center;
+    gap: 5px;
+}
+
+#espandiTuttoBtn img, #comprimiTuttoBtn img {
+    margin-right: 5px;
+    transition: transform 0.2s ease;
+}
+#espandiTuttoBtn:hover img {
+    transform: scale(1.2);
+}
+
+#comprimiTuttoBtn:hover img {
+    transform: scale(1.2);
+}
+
+.movimento-row .movement-buttons {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
+.movimento-row .movement-buttons button {
+    background: none;
+    border: none;
+    padding: 2px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.movimento-row .movement-buttons button:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+/* Modificato da gradient a monocolore come richiesto - Blu scuro */
+.navbar-container {
+    background: #1a2980;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    border-radius: 0 0 10px 10px;
+}
+
+.navbar-container nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.logo-container {
+    margin-right: 15px;
+}
+.logo-container {
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+}
+
+#content {
+    padding: 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page {
+    display: none;
+    padding: 20px 0;
+}
+
+.page.active {
+    display: block;
+}
+
+.input-group {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.empty-state {
+    text-align: center;
+    margin: 50px 0;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Regola per il pulsante di toggle nelle categorie */
+.toggle-category-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.toggle-category-btn:hover {
+    transform: scale(1.2);
+    background: none;
+    box-shadow: none;
+}
+
+.toggle-category-btn img {
+    transition: transform 0.3s ease;
+}
+
+/* Stile per contenuto collassabile nelle categorie */
+.category-content {
+    transition: all 0.3s ease;
+}
+
+/* Stili per l'indicatore di caricamento durante il processamento di più file */
+.loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-message {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.progress-count {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #1a2980;
+}
+
+/* Stile per il tooltip */
+.tooltip {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Stile per il tooltip */
+.tooltip {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* =============================================================
+   SEZIONE 2: STILI MODALS
+   ============================================================= */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.edit-modal {
+    width: 500px;
+    max-width: 95%;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.modal-content input:focus {
+    outline: none;
+    border-color: #0075e3;
+    box-shadow: 0 0 0 2px rgba(0, 117, 227, 0.25);
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+#annullaTitolo,
+#annullaModificaBtn,
+#annullaModificaMaterialeBtn,
+#annullaEditOperaioBtn,
+#annullaAssegnaOperaiBtn,
+#annullaStampaSelectBtn,
+#annullaStampaMaterialiBtn,
+#annullaStampaSquadreBtn {
+    background-color: #dc3545;
+    background-image: linear-gradient(to bottom right, #dc3545, #bd2130);
+}
+
+#annullaTitolo:hover,
+#annullaModificaBtn:hover,
+#annullaModificaMaterialeBtn:hover,
+#annullaEditOperaioBtn:hover,
+#annullaAssegnaOperaiBtn:hover,
+#annullaStampaSelectBtn:hover,
+#annullaStampaMaterialiBtn:hover,
+#annullaStampaSquadreBtn:hover {
+    background-image: linear-gradient(to bottom right, #bd2130, #a71d2a);
+}
+
+#stampaOrganizzazioneBtn,
+#stampaCostoMaterialiBtn,
+#stampaRichiestaMaterialiBtn,
+#stampaRichiestaOffertaBtn,
+#stampaOffertaBtn,
+#stampaGestioneOperaiBtn,
+#salvaModificaBtn,
+#salvaModificaMaterialeBtn,
+#salvaEditOperaioBtn,
+#salvaAssegnaOperaiBtn,
+#chiudiOrganicoBtn,
+#confermaStampaSelectBtn,
+#confermaStampaMaterialiBtn,
+#confermaStampaSquadreBtn {
+    background-color: #007bff;
+    background-image: linear-gradient(to bottom right, #007bff, #0056b3);
+}
+
+#stampaOrganizzazioneBtn:hover,
+#stampaCostoMaterialiBtn:hover,
+#stampaRichiestaMaterialiBtn:hover,
+#stampaRichiestaOffertaBtn:hover,
+#stampaOffertaBtn:hover,
+#stampaGestioneOperaiBtn:hover,
+#salvaModificaBtn:hover,
+#salvaModificaMaterialeBtn:hover,
+#salvaEditOperaioBtn:hover,
+#salvaAssegnaOperaiBtn:hover,
+#chiudiOrganicoBtn:hover,
+#confermaStampaSelectBtn:hover,
+#confermaStampaMaterialiBtn:hover,
+#confermaStampaSquadreBtn:hover {
+    background-image: linear-gradient(to bottom right, #0056b3, #003d80);
+}
+
+.form-row {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.form-row textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+.form-row textarea:focus {
+    outline: none;
+    border-color: #0075e3;
+    box-shadow: 0 0 0 2px rgba(0, 117, 227, 0.25);
+}
+
+/* Stili per il modal organico */
+.organico-container {
+    margin-bottom: 20px;
+}
+
+.operai-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.operai-table th {
+    background-color: #f1f3f5;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    border: 1px solid #dee2e6;
+}
+
+.operai-table td {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.operai-table tr:hover {
+    background-color: #e9ecef;
+}
+
+.operai-list-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+}
+
+.operaio-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.add-operaio-btn {
+    margin-top: 10px;
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.add-operaio-btn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Stili per assegnazione operai */
+.lista-operai-assegnazione {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.operaio-checkbox {
+    padding: 8px 12px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.operaio-checkbox:hover {
+    background-color: #f8f9fa;
+}
+
+.operaio-checkbox label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.operaio-checkbox input[type="checkbox"] {
+    width: 10% !important;
+    margin-right: 5px;
+}
+
+.operaio-checkbox .checkbox-label {
+    width: 90% !important;
+    text-align: left;
+}
+
+/* Stili per i modali di selezione per la stampa */
+.categorie-stampa-container,
+.materiali-stampa-container,
+.squadre-stampa-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.categorie-selection-header,
+.materiali-selection-header,
+.squadre-selection-header {
+    padding: 8px 12px;
+    border-bottom: 2px solid #dee2e6;
+    margin-bottom: 8px;
+}
+
+.categoria-checkbox,
+.materiale-checkbox,
+.squadra-checkbox {
+    padding: 8px 12px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.categoria-checkbox:hover,
+.materiale-checkbox:hover,
+.squadra-checkbox:hover {
+    background-color: #f8f9fa;
+}
+
+.categoria-checkbox label,
+.materiale-checkbox label,
+.squadra-checkbox label,
+.select-all-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.categoria-checkbox input[type="checkbox"],
+.materiale-checkbox input[type="checkbox"],
+.squadra-checkbox input[type="checkbox"],
+.select-all-label input[type="checkbox"] {
+    width: 10% !important;
+    margin-right: 5px;
+}
+
+.categoria-checkbox .checkbox-label,
+.materiale-checkbox .checkbox-label,
+.squadra-checkbox .checkbox-label,
+.select-all-label .checkbox-label {
+    width: 90% !important;
+    text-align: left;
+}
+
+/* =============================================================
+   SEZIONE 3: STILI TABELLE CATEGORIE
+   ============================================================= */
+.category-section {
+    margin-bottom: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.category-header {
+    /* Modificato da gradient a blu scuro solido */
+    background: #1a2980;
+    padding: 15px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.category-title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.category-title h3 {
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.discount-container {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 5px 10px;
+    border-radius: 20px;
+    gap: 5px;
+}
+
+.input-sconto {
+    padding: 5px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-weight: 500;
+}
+
+.category-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    height: 35px;
+}
+
+.category-controls img {
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.2s ease;
+    width: 24px;
+    height: 24px;
+}
+
+.category-controls img:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Stile generale tabelle */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.category-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    background-color: white;
+    table-layout: fixed !important;
+}
+
+.category-table .category-name-header th {
+    background-color: #f8f9fa;
+    text-align: left;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.category-table thead tr:not(.category-name-header) th {
+    background-color: #f1f3f5;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    color: #495057;
+    border: 1px solid #dee2e6;
+}
+
+/* Larghezze delle colonne nell'header */
+.category-table thead tr th:first-child {
+    width: 50% !important;
+}
+
+.category-table thead tr th:nth-child(2),
+.category-table thead tr th:nth-child(3) {
+    width: 15% !important;
+}
+
+.category-table thead tr th:nth-child(4),
+.category-table thead tr th:nth-child(5) {
+    width: 10% !important;
+}
+
+.category-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.category-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.category-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.category-table td {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+    text-align: center; /* Allineamento centrale per tutte le colonne */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Larghezze delle colonne nel body */
+.category-table td:first-child {
+    width: 50% !important;
+}
+
+.category-table td:nth-child(2),
+.category-table td:nth-child(3) {
+    width: 15% !important;
+}
+
+.category-table td:nth-child(4),
+.category-table td:nth-child(5) {
+    width: 10% !important;
+}
+
+.category-table .lavorazione {
+    text-align: left; /* Solo la colonna lavorazione allineata a sinistra */
+    padding-left: 15px;
+}
+
+.category-table .importo {
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Modificato lo sfondo delle righe dei totali con blu chiaro */
+.category-table .totale-row,
+.category-table .operai-row,
+.category-table .giornate-row,
+.category-table .date-row {
+    background-color: #e6f0fa !important;
+    font-weight: 500;
+}
+
+/* Modificato il colore del bordo superiore totale */
+.category-table .totale-row td {
+    border-top: 2px solid #0075e3;
+}
+
+/* Pulsanti spostamento righe */
+.movement-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.movement-buttons button {
+    padding: 5px;
+    margin: 0 2px;
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.movement-buttons button:hover {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+}
+
+.edit-button {
+    background-color: #e9ecef;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #ced4da;
+    transition: all 0.2s ease;
+}
+
+.edit-button:hover {
+    background-color: #dee2e6;
+    transform: scale(1.1);
+}
+
+/* Note Container */
+.note-container {
+    padding: 10px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.note-header {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+.note-input {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 60px;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+}
+
+.note-input:focus {
+    outline: none;
+    border-color: #0075e3;
+    box-shadow: 0 0 0 2px rgba(0, 117, 227, 0.25);
+}
+
+.note-content {
+    color: #dc3545;
+    font-weight: 600;
+    padding: 10px;
+    white-space: pre-wrap;
+}
+
+/* Stile per colgroup */
+.category-table colgroup col:nth-child(1) {
+    width: 50% !important;
+}
+.category-table colgroup col:nth-child(2),
+.category-table colgroup col:nth-child(3) {
+    width: 15% !important;
+}
+.category-table colgroup col:nth-child(4),
+.category-table colgroup col:nth-child(5) {
+    width: 10% !important;
+}
+
+/* Forza le larghezze anche quando il contenuto è ampio */
+.category-table td.lavorazione {
+    width: 50% !important;
+    max-width: 50% !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Stili per le date e operai nelle categorie */
+.operai-assegnati-container {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #e6f7ff;
+    border-radius: 6px;
+    border-left: 4px solid #1890ff;
+}
+
+/* Stile per il pulsante di assegnazione operai */
+.assegna-operai-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.assegna-operai-btn:hover {
+    transform: scale(1.1);
+    background: none;
+    box-shadow: none;
+}
+
+.assegna-operai-btn img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Aggiungi alla fine della SEZIONE 3 degli stili */
+.draggable-row {
+    cursor: move;
+    user-select: none;
+}
+
+.drag-over {
+    background-color: #f0f0f0 !important;
+    transition: background-color 0.2s ease;
+}
+
+/* Aggiungi alla fine della SEZIONE 3 degli stili */
+.draggable-row {
+    cursor: move;
+    user-select: none;
+}
+
+.drag-over {
+    background-color: #f0f0f0 !important;
+    transition: background-color 0.2s ease;
+}
+
+/* Stili per drag & drop delle categorie */
+.category-section.dragging {
+    opacity: 0.7;
+    cursor: grabbing;
+    border: 2px dashed #1a2980;
+    position: relative;
+    z-index: 1000;
+    background-color: #f8f9fa;
+    transform: scale(0.98);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.category-section.drag-over {
+    border-top: 5px solid #1a2980;
+    margin-top: -5px;
+    transition: transform 0.2s ease;
+}
+
+.category-section {
+    cursor: grab;
+}
+
+.category-section:active {
+    cursor: grabbing;
+}
+
+/* Disabilita il drag per i contenuti interni */
+.category-header *, .category-content *, .category-controls button {
+    pointer-events: auto;
+}
+
+/* Transizioni fluide per drag & drop */
+.category-section {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.category-section:hover {
+    z-index: 10;
+}
+
+/* Indicatore visivo per il trascinamento */
+.drag-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 5px;
+    background-color: #1a2980;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.category-section.drag-over .drag-indicator {
+    opacity: 1;
+}
+
+/* =============================================================
+   SEZIONE 4: STILI TABELLE MATERIALI
+   ============================================================= */
+.materiali-section {
+    margin-bottom: 15px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.materiali-section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+}
+
+.materiali-header {
+    /* Modificato da gradient verde a blu scuro solido */
+    background: #1a2980;
+    padding: 12px 15px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.materiali-header h3 {
+    margin: 0;
+    font-weight: 600;
+    max-width: 80%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.materiali-add-row {
+    margin: 10px;
+    text-align: center;
+}
+
+.materiali-add-row button {
+    /* Modificato il colore del pulsante per adattarsi al blu */
+    background-color: #0075e3;
+    border-radius: 20px;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.materiali-add-row button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.plus-icon {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 2px;
+}
+
+.materiali-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.materiali-table th {
+    background-color: #f1f3f5;
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    text-align: center;
+    color: #495057;
+    font-weight: 600;
+}
+
+.materiali-table td {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+    text-align: center; /* Allineamento centrale per tutte le colonne */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.materiali-table td:first-child {
+    text-align: left; /* Solo la prima colonna (descrizione) allineata a sinistra */
+}
+
+.materiali-table .prezzo-cell {
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Modificato lo sfondo della riga del totale materiali con blu chiaro */
+.materiali-table .totale-materiali-row {
+    background-color: #e6f0fa;
+    font-weight: 600;
+}
+
+/* Modificato il colore del bordo superiore */
+.materiali-table .totale-materiali-row td {
+    border-top: 2px solid #0075e3;
+}
+
+/* Pulsanti materiali senza sfondo blu */
+.edit-material-button, 
+.delete-material-button {
+    background: none;
+    box-shadow: none;
+    padding: 3px;
+    margin: 0 2px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-material-button:hover, 
+.delete-material-button:hover {
+    background-color: #f1f3f5;
+    transform: scale(1.1);
+    box-shadow: none;
+}
+
+/* Flag per le tabelle materiali senza materiali */
+.empty-materials {
+    opacity: 0.7;
+}
+
+/* Stili per organizzazione materiali per categoria */
+.categoria-materiali-header {
+    /* Modificato da gradient a blu scuro solido */
+    background: #1a2980;
+    padding: 12px 15px;
+    color: white;
+    border-radius: 10px 10px 0 0;
+    margin-top: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.categoria-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.categoria-materiali-header h3 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.3em;
+}
+
+.categoria-materiali-container {
+    padding: 5px 10px;
+}
+
+.categoria-separatore {
+    height: 20px;
+}
+
+.toggle-categoria-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 5px;
+}
+
+.toggle-categoria-btn:hover {
+    transform: scale(1.2);
+    background: none;
+    box-shadow: none;
+}
+
+.toggle-categoria-btn img {
+    transition: transform 0.3s ease;
+}
+
+/* Stile per rendere cliccabile l'header dei materiali */
+.materiali-header {
+    cursor: pointer;
+}
+
+/* Stile per la transizione di apertura/chiusura */
+.materiali-content {
+    transition: all 0.3s ease;
+}
+
+/* =============================================================
+   SEZIONE 5: STILI TABELLA OFFERTA
+   ============================================================= */
+.offerta-container {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offerta-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+}
+
+.offerta-header {
+    /* Modificato da gradient a blu scuro solido */
+    background: #1a2980;
+    padding: 15px;
+    color: white;
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 15px;
+}
+
+.offerta-header h2 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.offerta-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed;
+}
+
+.offerta-table th {
+    background-color: #f1f3f5;
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    text-align: center;
+    color: #495057;
+    font-weight: 600;
+}
+
+.offerta-table td {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+    text-align: center; /* Allineamento centrale di default */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.offerta-table .lavorazione-col {
+    text-align: left; /* Solo la colonna lavorazione allineata a sinistra */
+}
+
+.offerta-table .prezzo-col {
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Modificato lo sfondo della riga del totale con blu chiaro */
+.offerta-table .totale-row {
+    background-color: #e6f0fa;
+    font-weight: 600;
+}
+
+/* Modificato il colore del bordo superiore */
+.offerta-table .totale-row td {
+    border-top: 2px solid #1a2980;
+}
+
+/* Modificato lo sfondo dell'intestazione categoria con blu chiaro */
+.offerta-table .categoria-header-row {
+    background-color: #e6f0fa;
+    font-weight: 700;
+    color: #1a2980;
+    text-align: left;
+    cursor: pointer;
+}
+
+.offerta-table .categoria-header-row td {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-top: 2px solid #1a2980;
+    border-bottom: 2px solid #1a2980;
+    text-align: left; /* Garantisce allineamento a sinistra per il nome categoria */
+}
+
+.offerta-table .categoria-header-row:hover {
+    background-color: #d1e6f9;
+}
+
+.categoria-info {
+    font-size: 0.85em;
+    font-weight: normal;
+    color: #4a6995;
+    margin-top: 3px;
+}
+
+/* =============================================================
+   SEZIONE 6: STILI GESTIONE OPERAI
+   ============================================================= */
+/* Stili per la pagina operai */
+.operai-action-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.operai-button {
+    padding: 12px 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 6px;
+    background-color: #1a2980;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.operai-button:hover {
+    background-color: #3a4db3;
+    transform: translateY(-2px);
+}
+
+.button-icon {
+    font-size: 18px;
+}
+
+.squadra-section {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.squadra-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.squadra-header {
+    background: #1a2980;
+    color: white;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+}
+
+.squadra-header h3 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.squadra-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.squadra-table th {
+    background-color: #f1f3f5;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #dee2e6;
+}
+
+.squadra-table td {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.squadra-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.squadra-table tr:hover {
+    background-color: #e9ecef;
+}
+
+.date-input {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.date-input:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.durata-cell {
+    font-weight: bold;
+    color: #0056b3;
+}
+
+/* Squadra nella pagina di stampa */
+.print-squadra-header {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    border-bottom: 2px solid #1a2980;
+}
+
+.print-squadra-header h2 {
+    color: #1a2980;
+    font-size: 20px;
+    margin: 0;
+}
+
+.print-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    border: 1px dashed #dee2e6;
+    border-radius: 8px;
+    margin: 20px 0;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Stili per il nuovo layout del modal organico */
+.operai-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.operai-table th {
+    background-color: #f5f7fa;
+    padding: 10px;
+    text-align: left;
+    font-weight: 600;
+    border: 1px solid #dee2e6;
+}
+
+.operai-table td {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+}
+
+.edit-operaio-btn, 
+.delete-operaio-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    padding: 5px;
+}
+
+.edit-operaio-btn:hover, 
+.delete-operaio-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Stili per la tabella nascosta del piano di lavoro completo */
+.print-piano-completo-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.print-piano-completo-table th {
+    background-color: #f0f0f0;
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #000;
+}
+
+.print-piano-completo-table td {
+    padding: 8px;
+    border: 1px solid #000;
+    vertical-align: middle;
+}
+
+/* Aggiungi questo alla fine della SEZIONE 6 */
+.categoria-nome {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #1a2980;
+    transition: color 0.3s ease;
+}
+
+.categoria-nome:hover {
+    color: #0056b3;
+}
+
+/* =============================================================================
+   SEZIONE 7: STILI DI STAMPA
+   ============================================================= */
+/* Nascondi il container di stampa durante la visualizzazione normale */
+#printContainer {
+    display: none;
+}
+
+/* Stili specifici per la stampa */
+@media print {
+    /* Nascondi tutto tranne il container di stampa */
+    body > *:not(#printContainer) {
+        display: none !important;
+    }
+    
+    /* Mostra il container di stampa */
+    #printContainer {
+        display: block !important;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        background-color: white;
+    }
+    
+    /* Stili per l'intestazione della stampa */
+    .print-header-page {
+        text-align: center;
+        margin-bottom: 3cm;
+        padding-top: 1cm;
+    }
+    
+    /* Logo più grande */
+    .print-logo {
+        height: 160px; /* Raddoppiato rispetto ai 80px precedenti */
+        display: block;
+        margin: 0 auto 30px auto;
+    }
+    
+    .print-document-type {
+        font-size: 22pt;
+        font-weight: bold;
+        margin-bottom: 12px;
+        margin-top: 30px; /* Aggiunto per spostare il testo più in basso rispetto al logo */
+    }
+    
+    .print-title {
+        font-size: 16pt;
+        margin-bottom: 10px;
+    }
+    
+    .print-client {
+        font-size: 14pt;
+        margin-bottom: 10px;
+    }
+    
+    .print-date {
+        font-size: 12pt;
+        margin-bottom: 15px;
+    }
+    
+    /* Stili per le tabelle di stampa */
+    .print-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    .print-table th,
+    .print-table td {
+        border: 1px solid #000;
+        padding: 8px;
+        font-size: 11pt;
+    }
+    
+    .print-table th {
+        background-color: #f0f0f0 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-weight: bold;
+        text-align: center;
+    }
+    
+    /* Righe intestazione categoria (blu chiaro) */
+    .print-category-header {
+        background-color: #e6f0fa !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color: #1a2980;
+        font-weight: bold;
+        font-size: 12pt;
+    }
+    
+    /* Righe totale (blu chiaro) */
+    .print-totale-row td {
+        background-color: #e6f0fa !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-weight: bold;
+    }
+    
+    /* Totale generale in grassetto */
+    .print-totale-generale {
+        font-weight: bold;
+        font-size: 12pt;
+    }
+    
+    /* Contenuto delle note */
+    .print-note {
+        margin-bottom: 20px;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    /* Stili per il riquadro firma */
+    .print-firma-container {
+        width: 300px;
+        margin-left: auto;
+        margin-right: 20px;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        text-align: center;
+    }
+    
+    .print-firma-titolo {
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 12pt;
+    }
+    
+    .print-firma-linea {
+        border-bottom: 1px solid #000;
+        margin: 40px 0 15px 0;
+    }
+    
+    .print-firma-data {
+        font-style: italic;
+        font-size: 10pt;
+        text-align: right;
+    }
+    
+    /* Gestione interruzioni di pagina */
+    .print-page-break {
+        page-break-before: always;
+        height: 0;
+        margin: 0;
+        padding: 0;
+    }
+    
+.print-mascherina {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    overflow: hidden;
+    page-break-after: always;
+}
+
+.mascherina-background {
+    background-image: url('./mascherina.png') !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+}
+
+#printContentContainer {
+    margin-top: 5mm;
+}
+
+/* Nascondi la vecchia intestazione se presente */
+.print-header-page {
+    display: none !important;
+}
+
+    /* Stili specifici per Organizzazione Cantiere */
+.print-organizzazione-table th:first-child {
+    width: 80% !important;
+    text-align: left !important;
+}
+.print-organizzazione-table th:last-child {
+    width: 20% !important;
+    text-align: center !important;
+}
+.print-organizzazione-table td:first-child {
+    width: 80% !important;
+    text-align: left !important;
+}
+.print-organizzazione-table td:last-child {
+    width: 20% !important;
+    text-align: center !important;
+}
+    
+    /* Stili specifici per Richiesta Materiali e Costo Materiali */
+    /* Aggiornati per includere la colonna "Quantità" */
+    .print-materiali-table th:nth-child(1) {
+        width: 40%;  /* Materiale */
+    }
+    .print-materiali-table th:nth-child(2) {
+        width: 10%;  /* Unità */
+    }
+    .print-materiali-table th:nth-child(3) {
+        width: 15%;  /* Quantità - NUOVA COLONNA */
+    }
+    .print-materiali-table th:nth-child(4) {
+        width: 15%;  /* Prezzo Unitario */
+    }
+    .print-materiali-table th:nth-child(5) {
+        width: 20%;  /* Prezzo Totale */
+    }
+    
+    /* Stili specifici per Offerta e Richiesta Offerta */
+    .print-offerta-table th:nth-child(1) {
+        width: 50%;
+    }
+    .print-offerta-table th:nth-child(2),
+    .print-offerta-table th:nth-child(3),
+    .print-offerta-table th:nth-child(4) {
+        width: 15%;
+    }
+    
+    /* Stili specifici per Piano di Lavoro Operai */
+    .print-squadra-table th:nth-child(1) {
+        width: 50%;
+    }
+    .print-squadra-table th:nth-child(2),
+    .print-squadra-table th:nth-child(3) {
+        width: 15%;
+    }
+    .print-squadra-table th:nth-child(4) {
+        width: 20%;
+    }
+    
+    /* Stile per la quantità nella intestazione di lavorazione */
+    .print-category-header span {
+        font-size: 11pt;
+        color: #333333;
+    }
+    
+    /* Stile per le informazioni delle squadre */
+    .print-squadra-header {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    /* Stili specifici per la tabella del piano di lavoro completo */
+    .print-piano-completo-table {
+        width: 100%;
+        border-collapse: collapse;
+        page-break-inside: avoid;
+    }
+    
+    .print-piano-completo-table th,
+    .print-piano-completo-table td {
+        border: 1px solid #000;
+        padding: 8px;
+        font-size: 10pt;
+    }
+    
+    .print-piano-completo-table th {
+        background-color: #e6f0fa !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-weight: bold;
+    }
+}
+
+/* Stili per la nuova mascherina di stampa */
+.print-mascherina {
+    position: relative;
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    page-break-after: always;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mascherina-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('./mascherina.png');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+}
+
+.print-document-type {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    left: 50%;
+    bottom: 205.5mm; /* Spostato verso il basso di 7mm (0.7cm) da 212.5mm */
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.print-title {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    left: 50%;
+    bottom: 168mm; /* Spostato verso il basso di 7mm (0.7cm) da 175mm */
+    transform: translateX(-50%);
+    font-size: 20px;
+    z-index: 2;
+}
+
+.print-client-container {
+    position: absolute;
+    width: 80mm;
+    text-align: center;
+    left: 45.25mm;
+    bottom: 18mm; /* Spostato verso il basso di 7mm (0.7cm) da 25mm */
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.print-client {
+    font-size: 18px;
+    margin-bottom: 5mm;
+}
+
+.print-impresa-container {
+    position: absolute;
+    width: 80mm;
+    text-align: center;
+    left: 164.75mm;
+    bottom: 18mm; /* Spostato verso il basso di 7mm (0.7cm) da 25mm */
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.print-impresa {
+    font-size: 18px;
+    margin-bottom: 5mm;
+}
+
+.print-date-container {
+    position: absolute;
+    width: 80mm;
+    text-align: center;
+    left: 105mm;
+    bottom: 18mm; /* Spostato verso il basso di 7mm (0.7cm) da 25mm */
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.print-date {
+    font-size: 16px;
+}
+
+.print-firma-linea {
+    border-bottom: 1px solid #000;
+    width: 70%; /* Ridotto del 30% da 100% */
+    margin: 10mm auto 0; /* Centrato orizzontalmente */
+}
+/* =============================================================
+   SEZIONE 8: STILI GESTIONE OPERAI
+   ============================================================= */
+/* Stili per la pagina operai */
+.operai-action-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.operai-button {
+    padding: 12px 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 6px;
+    background-color: #1a2980;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.operai-button:hover {
+    background-color: #3a4db3;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.button-icon {
+    font-size: 18px;
+}
+
+.squadra-section {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.squadra-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.squadra-header {
+    background: #1a2980;
+    color: white;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+}
+
+.squadra-header h3 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.squadra-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.squadra-table th {
+    background-color: #f1f3f5;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #dee2e6;
+}
+
+.squadra-table td {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.squadra-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.squadra-table tr:hover {
+    background-color: #e9ecef;
+}
+
+.date-input {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.date-input:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.durata-cell {
+    font-weight: 500;
+    color: #0056b3;
+}
+
+/* Estensione degli stili del modal di organico */
+.lista-operai {
+    padding: 10px;
+}
+
+.operaio-info {
+    font-weight: 500;
+}
+
+.edit-operaio-btn, 
+.delete-operaio-btn {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.edit-operaio-btn:hover, 
+.delete-operaio-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Stili per visualizzare operai e date nelle sezioni materiali e offerta */
+.categoria-info {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: white;
+    opacity: 0.9;
+}
+
+/* Stile per la tabella offerta */
+.categoria-info {
+    font-size: 0.9em;
+    margin-top: 5px;
+    color: #4a5568;
+}
+
+/* Stili specifici per stampa */
+.print-squadra-header {
+    background-color: #e6f0fa;
+    padding: 15px;
+    margin: 20px 0 10px;
+    border-radius: 5px;
+}
+
+.print-squadra-header h2 {
+    margin: 0;
+    color: #1a2980;
+    font-size: 1.5em;
+}
+
+.print-empty-state {
+    text-align: center;
+    padding: 30px;
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* Stili per il pulsante seleziona categorie */
+#selezionaCategorieBtn {
+    margin: 10px 0;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+#selezionaCategorieBtn:hover {
+    background-color: #0069d9;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Stili responsivi per mobile */
+@media (max-width: 768px) {
+    .operai-action-container {
+        flex-direction: column;
+    }
+    
+    .materiali-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .squadra-table th,
+    .squadra-table td {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+    
+    .date-input {
+        width: 100%;
+    }
+    
+    .organico-container {
+        flex-direction: column;
+    }
+}
+
+/* Supporto per espansione/compressione delle tabelle materiali */
+.collapsed {
+    display: none !important;
+}
+
+.materiali-content, .categoria-materiali-container {
+    transition: all 0.3s ease;
+}
+
+.toggle-categoria-btn img {
+    transition: transform 0.3s ease;
+}
+
+#salvaOperaiBtn, #caricaOperaiBtn {
+    background-color: #1a2980;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#salvaOperaiBtn:hover, #caricaOperaiBtn:hover {
+    background-color: #3a4db3;
+    transform: translateY(-2px);
+}
+
+/* =============================================================================
+   SEZIONE 9: SISTEMA DI NOTIFICA
+   ============================================================= */
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a2980;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    transition: opacity 0.3s, top 0.3s;
+    text-align: center;
+    min-width: 300px;
+    max-width: 80%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.notification.success {
+    background-color: #28a745;
+}
+
+.notification.error {
+    background-color: #dc3545;
+}
+
+.notification.info {
+    background-color: #17a2b8;
+}
+
+.notification.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
